@@ -33,14 +33,18 @@ public class Gun : MonoBehaviour {
 		
 		if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
 		
-			Debug.Log(hit.transform.name);
+			GameObject box = hit.transform.gameObject;
+
 			if(hit.transform.tag == "box"){
-				hit.transform.parent = null;
+				GameObject ChildGameObject0 = hit.transform.GetChild(0).gameObject; 
+				ChildGameObject0.transform.parent= null;
+				Destroy(box);
 			}
 
 			Item itemComprado = hit.collider.GetComponent<Item>();
 
-			if(itemComprado){
+			if(itemComprado.preco <= dinheiro){
+
 				dinheiro -= itemComprado.preco;
       			Instantiate(itemComprado.itemPrefab, new Vector3(player.transform.position.x, 
       															 player.transform.position.y, 

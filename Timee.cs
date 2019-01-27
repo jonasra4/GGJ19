@@ -51,7 +51,7 @@ public class Timee : MonoBehaviour {
        		if (trySpaw >= chanceSpawn && !isSpaw){
         		SpawCat();
         		isSpaw = true;
-        		timer = 0;
+        		timer2 = 0;
        		}
 
             visualTime = timer;
