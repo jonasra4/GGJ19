@@ -11,13 +11,10 @@ public class Gun : MonoBehaviour {
 	public Camera fpsCam;
 
 	public Text textDinheiro;
-	public int dinheiro = 950;
+	public int dinheiro;
 	
 	public GameObject player;
 
-
-
-	private string itemAtual;//item que foi selecionado
 
 	void Update () {
 		
@@ -32,22 +29,24 @@ public class Gun : MonoBehaviour {
 		RaycastHit hit;
 		
 		if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)) {
-		
-			GameObject box = hit.transform.gameObject;
+			
+			GameObject box = hit.transform.gameObject; // salva referencia do pai (box)
 
 			if(hit.transform.tag == "box"){
 				GameObject ChildGameObject0 = hit.transform.GetChild(0).gameObject; 
+				 
 				ChildGameObject0.transform.parent= null;
 				Destroy(box);
+				ChildGameObject0.GetComponent<ParticleSystem>().Play();
 			}
 
 			Item itemComprado = hit.collider.GetComponent<Item>();
 
-			if(itemComprado.preco <= dinheiro){
+			if( itemComprado && itemComprado.preco <= dinheiro){
 
 				dinheiro -= itemComprado.preco;
       			Instantiate(itemComprado.itemPrefab, new Vector3(player.transform.position.x, 
-      															 player.transform.position.y, 
+      															 player.transform.position.y, // o valor pode variar depedendo de como o personage estaconfigurado
       															 player.transform.position.z-5), Quaternion.identity);
 
 			}

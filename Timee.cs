@@ -5,8 +5,8 @@ using UnityEngine;
 public class Timee : MonoBehaviour {
 
 
-    private float timer = 0.0f;
-    private float timer2 = 0.0f; // conta o tempo que nao deve ser spawnado
+    private float timer = 0.0f; // tempo de tentavas de spawn
+    private float timer2 = 0.0f; // tempo que nao deve ser spawnado
 
     private float visualTime = 0.0f;
     private int width, height;
@@ -25,8 +25,8 @@ public class Timee : MonoBehaviour {
     
     void Awake()
     {
-        width = Screen.width;
-        height = Screen.height;
+        //width = Screen.width;
+        //height = Screen.height;
         Time.timeScale = scrollBar;
     }
 
@@ -44,11 +44,11 @@ public class Timee : MonoBehaviour {
         }
 
 
-        if (timer > waitTime) // A cada X segundos
+        if (timer > waitTime && !isSpaw) // A cada X segundos tenta criar um gato
         {       		
        		float trySpaw = Random.Range(0, 1.0f);
 
-       		if (trySpaw >= chanceSpawn && !isSpaw){
+       		if (trySpaw >= chanceSpawn){
         		SpawCat();
         		isSpaw = true;
         		timer2 = 0;
@@ -60,8 +60,6 @@ public class Timee : MonoBehaviour {
             timer = timer - waitTime;
             Time.timeScale = scrollBar;
         }
-
-
     }
 
     void SpawCat()
